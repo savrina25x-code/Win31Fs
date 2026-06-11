@@ -24,6 +24,13 @@ export default function ProgramManager({ onOpenApp, openAppMap }: ProgramManager
       desc: 'Customize colors & audio speaker settings.',
     },
     {
+      id: 'media' as AppId,
+      name: 'Media Player',
+      group: 'main',
+      iconUrl: '🎬',
+      desc: 'Play custom audio/video or chiptune tracks.',
+    },
+    {
       id: 'notepad' as AppId,
       name: 'Notepad Text',
       group: 'main',

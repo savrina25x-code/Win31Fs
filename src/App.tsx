@@ -15,6 +15,7 @@ import Calculator from './components/Calculator';
 import Notepad from './components/Notepad';
 import ClockApp from './components/ClockApp';
 import ControlPanel from './components/ControlPanel';
+import MediaPlayer from './components/MediaPlayer';
 
 // Icons for minimized dock
 const RETRO_APP_ICONS: Record<AppId, string> = {
@@ -25,6 +26,7 @@ const RETRO_APP_ICONS: Record<AppId, string> = {
   notepad: '🗒️',
   clock: '⏰',
   cpanel: '🎨',
+  media: '🎬',
 };
 
 export default function App() {
@@ -135,6 +137,20 @@ export default function App() {
       height: 380,
       minWidth: 280,
       minHeight: 300,
+      zIndex: 5,
+    },
+    {
+      id: 'media',
+      title: 'Media Player v3.1',
+      isOpen: false,
+      isMinimized: false,
+      isMaximized: false,
+      x: 140,
+      y: 110,
+      width: 480,
+      height: 440,
+      minWidth: 320,
+      minHeight: 380,
       zIndex: 5,
     },
   ]);
@@ -545,6 +561,7 @@ export default function App() {
                 {win.id === 'calculator' && <Calculator />}
                 {win.id === 'notepad' && <Notepad />}
                 {win.id === 'clock' && <ClockApp />}
+                {win.id === 'media' && <MediaPlayer />}
                 {win.id === 'cpanel' && (
                   <ControlPanel
                     currentScheme={currentScheme}

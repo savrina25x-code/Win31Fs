@@ -1,8 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Arial", "MS Sans Serif", -apple-system, sans-serif;
+  --font-sans: "VT323", "Arial", "MS Sans Serif", -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", "Courier New", monospace;
+  --font-pixel: "Press Start 2P", monospace;
+}
+
+/* Base adjustment for crisp pixel rendering */
+html, body {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
 
 /* Retro Patterns */

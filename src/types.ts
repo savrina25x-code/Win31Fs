@@ -1,4 +1,4 @@
-export type AppId = 'progman' | 'notepad' | 'paintbrush' | 'minesweeper' | 'calculator' | 'clock' | 'cpanel';
+export type AppId = 'progman' | 'notepad' | 'paintbrush' | 'minesweeper' | 'calculator' | 'clock' | 'cpanel' | 'media';
 
 export interface WindowState {
   id: AppId;
@@ -15,7 +15,7 @@ export interface WindowState {
   zIndex: number;
 }
 
-export type ThemeScheme = 'default' | 'hotdog' | 'emerald' | 'highcontrast' | 'plum';
+export type ThemeScheme = 'default' | 'hotdog' | 'emerald' | 'highcontrast' | 'plum' | 'pixelart';
 
 export interface ColorTheme {
   name: string;
@@ -46,6 +46,20 @@ export const THEME_SCHEMES: Record<ThemeScheme, ColorTheme> = {
     buttonHighlight: '#FFFFFF',
     textColor: '#000000',
     textMuted: '#808080',
+  },
+  pixelart: {
+    name: 'Pixel Art (8-Bit Neon)',
+    desktopBg: '#2a0845',
+    windowBg: '#111116',
+    titleActiveBg: '#ff007f',
+    titleActiveText: '#00ffff',
+    titleInactiveBg: '#441151',
+    titleInactiveText: '#888888',
+    buttonFace: '#32103c',
+    buttonShadow: '#000000',
+    buttonHighlight: '#ff007f',
+    textColor: '#00ffff',
+    textMuted: '#ffff00',
   },
   hotdog: {
     name: 'Hotdog Stand',
