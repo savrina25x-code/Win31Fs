@@ -1,0 +1,6 @@
+{
+  "name": "Windows 3.1 Web Desktop",
+  "description": "An interactive, pixel-perfect Windows 3.1 retro desktop experience featuring classic applications like Minesweeper, Paintbrush, Calculator, Notepad, Clock, and the classic Control Panel for theme customization.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

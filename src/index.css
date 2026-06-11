@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Arial", "MS Sans Serif", -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Courier New", monospace;
+}
+
+/* Retro Patterns */
+.pat-checkers {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Crect width='2' height='2' fill='%23000000' opacity='0.25'/%3E%3Crect x='2' y='2' width='2' height='2' fill='%23000000' opacity='0.25'/%3E%3C/svg%3E");
+}
+
+.pat-waves {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath d='M0 0 L8 8 M-2 6 L2 10 M6 -2 L10 2' stroke='%23000000' stroke-width='1.5' opacity='0.2'/%3E%3C/svg%3E");
+}
+
+.pat-slate {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M0 0 H16 V16 H0 Z M0 8 H16 M8 0 V16' stroke='%23000000' stroke-width='1' opacity='0.15' fill='none'/%3E%3C/svg%3E");
+}
+
+/* Retro CRT scanlines */
+.crt-scanlines {
+  position: relative;
+  overflow: hidden;
+}
+
+.crt-scanlines::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.45) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.04));
+  background-size: 100% 4px, 6px 100%;
+  z-index: 20000;
+  pointer-events: none;
+}
+
+/* Bevel effects matching peak retro layout */
+.win-bevel-out {
+  border-top: 2px solid #FFFFFF;
+  border-left: 2px solid #FFFFFF;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+}
+
+.win-bevel-in {
+  border-top: 2.5px solid #5F5F5F;
+  border-left: 2.5px solid #5F5F5F;
+  border-bottom: 2.5px solid #FFFFFF;
+  border-right: 2.5px solid #FFFFFF;
+  box-shadow: inset 1px 1px 0 rgba(0,0,0,0.2);
+}
+
+/* Classic scrollbars */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: #E1E1E1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Crect width='2' height='2' fill='%23808080' opacity='0.15'/%3E%3Crect x='2' y='2' width='2' height='2' fill='%23808080' opacity='0.15'/%3E%3C/svg%3E");
+  border: 1px solid #C0C0C0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C0C0C0;
+  border: 2px solid;
+  border-color: #FFFFFF #808080 #808080 #FFFFFF;
+}
+
+::-webkit-scrollbar-thumb:active {
+  border-color: #808080 #FFFFFF #FFFFFF #808080;
+}
+
