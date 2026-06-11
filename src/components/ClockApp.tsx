@@ -4,13 +4,19 @@
  */
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Clock, Eye, Moon } from 'lucide-react';
+import { Clock, Eye, Moon, Bell, BellOff, Volume2 } from 'lucide-react';
 import { sounds } from './SoundEffects';
 
 export default function ClockApp() {
   const [isAnalog, setIsAnalog] = useState(true);
   const [time, setTime] = useState(new Date());
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  // Alarm States
+  const [alarmHour, setAlarmHour] = useState<number>(12);
+  const [alarmMinute, setAlarmMinute] = useState<number>(0);
+  const [alarmEnabled, setAlarmEnabled] = useState<boolean>(false);
+  const [isRinging, setIsRinging] = useState<boolean>(false);
 
   useEffect(() => {
     // Update time every second
@@ -20,6 +26,32 @@ export default function ClockApp() {
 
     return () => clearInterval(interval);
   }, []);
+
+  // Alarm matcher: Trigger on the exact second 0 of the matching hour and minute
+  useEffect(() => {
+    if (alarmEnabled && !isRinging) {
+      const currentHour = time.getHours();
+      const currentMinute = time.getMinutes();
+      const currentSecond = time.getSeconds();
+
+      if (currentHour === alarmHour && currentMinute === alarmMinute && currentSecond === 0) {
+        setIsRinging(true);
+      }
+    }
+  }, [time, alarmEnabled, alarmHour, alarmMinute, isRinging]);
+
+  // Repeated sound alert when ringing
+  useEffect(() => {
+    if (isRinging) {
+      // Play retro chiptune dual beep sound alert using system playBeep
+      sounds.playBeep(920, 0.12, 'square');
+      const subTimeout = setTimeout(() => {
+        sounds.playBeep(920, 0.12, 'square');
+      }, 180);
+
+      return () => clearTimeout(subTimeout);
+    }
+  }, [time, isRinging]);
 
   // Handle Analog drawing
   useEffect(() => {
@@ -147,6 +179,119 @@ export default function ClockApp() {
               <div className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mt-1">
                 {time.toLocaleDateString([], { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })}
               </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Alarm Settings Bevel Box */}
+      <div 
+        id="clock-alarm-settings"
+        className="mt-2 border-2 border-t-gray-700 border-l-gray-700 border-b-white border-r-white p-2.5 bg-[#C0C0C0] rounded-sm flex flex-col gap-2 shadow-[inset_1px_1px_0_rgba(0,0,0,0.15)]"
+      >
+        <div className="flex items-center justify-between font-bold text-[10px] text-gray-700 uppercase">
+          <span className="flex items-center gap-1">
+            <Bell size={11} className={alarmEnabled ? 'text-[#000080]' : 'text-gray-500'} />
+            Alarm System
+          </span>
+          {alarmEnabled ? (
+            <span className="text-red-700 animate-pulse font-bold text-[9px] flex items-center gap-1 bg-[#FFF0F0] px-1 border border-red-300">
+              ● SET {String(alarmHour).padStart(2, '0')}:{String(alarmMinute).padStart(2, '0')}
+            </span>
+          ) : (
+            <span className="text-gray-500 font-bold text-[9px] bg-gray-100 px-1 border border-gray-300">
+              DISABLED
+            </span>
+          )}
+        </div>
+
+        {isRinging ? (
+          <div className="bg-red-600 text-white p-2 rounded-sm flex flex-col items-center justify-center gap-2 border border-black animate-pulse">
+            <span className="font-extrabold text-[12px] uppercase text-yellow-300 tracking-wider">🔔 ALARM ACTIVE! 🔔</span>
+            <span className="text-[10px] font-mono font-bold text-center">SYSTEM ALARM TRIGGERED</span>
+            <button
+              onClick={() => {
+                sounds.playTick();
+                setIsRinging(false);
+              }}
+              className="px-3 py-1 bg-white hover:bg-gray-100 text-red-700 font-bold border-2 border-black rounded-sm cursor-pointer shadow-md text-xs active:bg-gray-200"
+            >
+              DISMISS
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center justify-between gap-1">
+            <div className="flex items-center gap-2">
+              {/* Hour Dropdown */}
+              <div className="flex flex-col">
+                <span className="text-[9px] text-gray-700 font-bold mb-0.5">Hr</span>
+                <select
+                  value={alarmHour}
+                  onChange={(e) => {
+                    sounds.playTick();
+                    setAlarmHour(parseInt(e.target.value));
+                  }}
+                  className="bg-white border-2 border-t-gray-700 border-l-gray-700 border-b-white border-r-white px-1 py-0.5 font-mono text-[11px] w-14 cursor-pointer outline-none"
+                >
+                  {Array.from({ length: 24 }).map((_, h) => (
+                    <option key={h} value={h}>
+                      {String(h).padStart(2, '0')}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <span className="font-bold text-gray-700 pt-3 text-xs">:</span>
+
+              {/* Minute Dropdown */}
+              <div className="flex flex-col">
+                <span className="text-[9px] text-gray-700 font-bold mb-0.5">Min</span>
+                <select
+                  value={alarmMinute}
+                  onChange={(e) => {
+                    sounds.playTick();
+                    setAlarmMinute(parseInt(e.target.value));
+                  }}
+                  className="bg-white border-2 border-t-gray-700 border-l-gray-700 border-b-white border-r-white px-1 py-0.5 font-mono text-[11px] w-14 cursor-pointer outline-none"
+                >
+                  {Array.from({ length: 60 }).map((_, m) => (
+                    <option key={m} value={m}>
+                      {String(m).padStart(2, '0')}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* Controls */}
+            <div className="flex gap-1 items-end h-full pt-3">
+              <button
+                type="button"
+                onClick={() => {
+                  sounds.playBeep(920, 0.12, 'square');
+                  const subTimeout = setTimeout(() => {
+                    sounds.playBeep(920, 0.12, 'square');
+                  }, 180);
+                }}
+                title="Test sound beeper"
+                className="p-1 border-2 border-t-white border-l-white border-b-black border-r-black bg-[#C0C0C0] hover:bg-gray-100 active:border-inner rounded-sm cursor-pointer"
+              >
+                <Volume2 size={12} className="text-[#000080]" />
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  sounds.playTick();
+                  setAlarmEnabled(!alarmEnabled);
+                }}
+                className={`px-3 py-1 border-2 border-t-white border-l-white border-b-black border-r-black active:border-inner cursor-pointer font-bold rounded-sm text-[10px] uppercase shadow-sm
+                  ${alarmEnabled 
+                    ? 'bg-red-100 text-red-800 border-b-red-900 border-r-red-900' 
+                    : 'bg-[#C0C0C0] text-black hover:bg-gray-100'
+                  }`}
+              >
+                {alarmEnabled ? 'Off' : 'On'}
+              </button>
             </div>
           </div>
         )}
