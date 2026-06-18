@@ -10,23 +10,27 @@ import { sounds } from './components/SoundEffects';
 // Lazy loading classic programs
 import ProgramManager from './components/ProgramManager';
 import Minesweeper from './components/Minesweeper';
+import Solitaire from './components/Solitaire';
 import Paintbrush from './components/Paintbrush';
 import Calculator from './components/Calculator';
 import Notepad from './components/Notepad';
 import ClockApp from './components/ClockApp';
 import ControlPanel from './components/ControlPanel';
 import MediaPlayer from './components/MediaPlayer';
+import ActivationWizard from './components/ActivationWizard';
 
 // Icons for minimized dock
 const RETRO_APP_ICONS: Record<AppId, string> = {
   progman: '📁',
   minesweeper: '💣',
+  solitaire: '🃏',
   paintbrush: '🖌️',
   calculator: '🧮',
   notepad: '🗒️',
   clock: '⏰',
   cpanel: '🎨',
   media: '🎬',
+  activation: '🔑',
 };
 
 export default function App() {
@@ -150,6 +154,34 @@ export default function App() {
       width: 480,
       height: 440,
       minWidth: 320,
+      minHeight: 380,
+      zIndex: 5,
+    },
+    {
+      id: 'solitaire',
+      title: 'Solitaire Card Game',
+      isOpen: false,
+      isMinimized: false,
+      isMaximized: false,
+      x: 110,
+      y: 80,
+      width: 580,
+      height: 480,
+      minWidth: 400,
+      minHeight: 380,
+      zIndex: 5,
+    },
+    {
+      id: 'activation',
+      title: 'FBS-E Key Store & Activator',
+      isOpen: false,
+      isMinimized: false,
+      isMaximized: false,
+      x: 160,
+      y: 100,
+      width: 540,
+      height: 490,
+      minWidth: 360,
       minHeight: 380,
       zIndex: 5,
     },
@@ -557,11 +589,13 @@ export default function App() {
                   />
                 )}
                 {win.id === 'minesweeper' && <Minesweeper />}
+                {win.id === 'solitaire' && <Solitaire />}
                 {win.id === 'paintbrush' && <Paintbrush />}
                 {win.id === 'calculator' && <Calculator />}
                 {win.id === 'notepad' && <Notepad />}
                 {win.id === 'clock' && <ClockApp />}
                 {win.id === 'media' && <MediaPlayer />}
+                {win.id === 'activation' && <ActivationWizard />}
                 {win.id === 'cpanel' && (
                   <ControlPanel
                     currentScheme={currentScheme}

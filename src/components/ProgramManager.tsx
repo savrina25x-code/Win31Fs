@@ -31,6 +31,13 @@ export default function ProgramManager({ onOpenApp, openAppMap }: ProgramManager
       desc: 'Play custom audio/video or chiptune tracks.',
     },
     {
+      id: 'activation' as AppId,
+      name: 'FBS-E Key Store',
+      group: 'main',
+      iconUrl: '🔑',
+      desc: 'Securely buy game serial licenses with 7 USDT on BSC.',
+    },
+    {
       id: 'notepad' as AppId,
       name: 'Notepad Text',
       group: 'main',
@@ -43,6 +50,13 @@ export default function ProgramManager({ onOpenApp, openAppMap }: ProgramManager
       group: 'toys',
       iconUrl: '💣',
       desc: 'Classic VGA 9x9 or 16x16 sound-assisted logic grid.',
+    },
+    {
+      id: 'solitaire' as AppId,
+      name: 'Solitaire',
+      group: 'toys',
+      iconUrl: '🃏',
+      desc: 'Classic Windows Solitaire card puzzle with victory cascades!',
     },
     {
       id: 'paintbrush' as AppId,

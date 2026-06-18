@@ -1,4 +1,4 @@
-export type AppId = 'progman' | 'notepad' | 'paintbrush' | 'minesweeper' | 'calculator' | 'clock' | 'cpanel' | 'media';
+export type AppId = 'progman' | 'notepad' | 'paintbrush' | 'minesweeper' | 'calculator' | 'clock' | 'cpanel' | 'media' | 'solitaire' | 'activation';
 
 export interface WindowState {
   id: AppId;
